@@ -53,7 +53,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: clippy
-          args: --manifest-path/Cargo.toml -- -D warnings
+          args: --manifest-path=Cargo.toml -- -D warnings
 
   test-nightly:
     runs-on: ${{ matrix.os }}
