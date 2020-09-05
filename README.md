@@ -1,6 +1,7 @@
 # Image SSD
 
 [![Build](https://github.com/mermoldy/image-ssd/workflows/Build/badge.svg)](https://github.com/mermoldy/image-ssd/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A Rust library for object detection via SSD MobileNet.
 
