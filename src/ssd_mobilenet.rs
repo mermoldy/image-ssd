@@ -5,6 +5,7 @@ use crate::utils;
 use std::path;
 use tensorflow as tf;
 
+#[derive(PartialEq, Clone, Debug)]
 pub struct DetectionBox {
     pub x1: f32,
     pub y1: f32,
@@ -117,5 +118,33 @@ impl SSDMobileNetV2 {
         .collect();
 
         Ok(boxes)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    extern crate image;
+    use crate::cache;
+
+    #[test]
+    fn shot() {
+        let src_img_path = &std::path::Path::new("examples/basic_image/images/car.jpg");
+        let src_img = image::open(&src_img_path).unwrap();
+        let ssd_graph = cache::get_or_load_ssd_mobilenet_v2_graph().unwrap();
+
+        let ssd_net = SSDMobileNetV2::load(&ssd_graph).unwrap();
+        let mut ssd_boxes = ssd_net.shot(&src_img).unwrap();
+
+        assert_eq!(ssd_boxes.len(), 100);
+
+        ssd_boxes = ssd_boxes
+            .iter()
+            .filter(|d_box| d_box.score > 0.3)
+            .cloned()
+            .collect();
+        assert_eq!(ssd_boxes.len(), 2);
+        assert_eq!(ssd_boxes[0].label, "car");
+        assert_eq!(ssd_boxes[1].label, "car");
     }
 }

@@ -5,6 +5,7 @@ use std::collections;
 use std::fmt;
 use std::result;
 
+#[derive(PartialEq)]
 pub struct LabelNotFound {
     id: i32,
 }
@@ -42,10 +43,32 @@ impl LabelMap {
     }
 
     pub fn get_label_name(&self, id: &i32) -> Result<String, LabelNotFound> {
-        Ok(self
-            .data
-            .get(id)
-            .ok_or_else(|| LabelNotFound { id: *id })?
-            .to_string())
+        match self.data.get(id) {
+            Some(value) => Ok(value.to_string()),
+            None => Err(LabelNotFound { id: *id }),
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn get_label_name() {
+        let label_map = LabelMap::load().expect("Failed to initialize a Label Map");
+        let item = label_map
+            .get_label_name(&17)
+            .expect("Failed to get an item from the Label Map");
+        assert_eq!(item, "cat".to_string());
+    }
+
+    #[test]
+    fn not_found_label_name() {
+        let label_map = LabelMap::load().expect("Failed to initialize a Label Map");
+        assert_eq!(
+            label_map.get_label_name(&123456789),
+            Err(LabelNotFound { id: 123456789 })
+        )
     }
 }
