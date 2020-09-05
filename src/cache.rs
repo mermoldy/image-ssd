@@ -1,13 +1,8 @@
 use crate::error;
-use checksums;
-use dirs;
-use flate2;
-use minreq;
 use std::fs;
 use std::io;
 use std::io::Write;
 use std::path;
-use tar;
 
 // TODO: add multiple mirrors
 const SSD_V2_SOURCE_URL: &str = "http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v2_coco_2018_03_29.tar.gz";
@@ -22,7 +17,7 @@ fn ssd_mobilenet_v2_files() -> Result<(path::PathBuf, path::PathBuf, path::PathB
         .and_then(|s| s.to_str())
         .ok_or_else(|| "Failed to parse file name")?;
     let archive_file_stem = archive_file_name
-        .split(".")
+        .split('.')
         .next()
         .ok_or_else(|| "Failed to parse file stem")?;
 

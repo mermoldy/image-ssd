@@ -2,9 +2,7 @@ extern crate image;
 use crate::error;
 use crate::ssd_mobilenet;
 
-use piet;
 use piet::kurbo;
-use piet_common;
 
 use image::GenericImageView;
 use piet::{RenderContext, Text, TextLayout, TextLayoutBuilder};
@@ -159,5 +157,11 @@ impl ImageBoxes {
             .ok_or_else(|| "Cannot contruct a buffer from a generic container")?;
 
         Ok(res_img)
+    }
+}
+
+impl Default for ImageBoxes {
+    fn default() -> Self {
+        ImageBoxes::new()
     }
 }

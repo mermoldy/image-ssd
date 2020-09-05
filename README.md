@@ -1,5 +1,7 @@
 # Image SSD
 
+[![Build](https://github.com/mermoldy/image-ssd/workflows/Build/badge.svg)](https://github.com/mermoldy/image-ssd/actions)
+
 A Rust library for object detection via SSD MobileNet.
 
 ## Usage
