@@ -1,0 +1,23 @@
+[package]
+name = "image-ssd"
+version = "0.1.0"
+authors = ["Serhii Babak <serhii.babak@protonmail.com>"]
+edition = "2018"
+
+[dependencies]
+image = "0.23.4"
+hashbrown = "0.8.2"
+ndarray = "0.13.1"
+minreq = "2.2.1"
+tar = "0.4.29"
+flate2 = "1.0.17"
+dirs = "3.0"
+log = "0.4.8"
+checksums = "0.6.0"
+tensorflow = { git = "https://github.com/tensorflow/rust#e9e4b489ed66a2d9fbb5f4b610f1e46a3c38e1fd" }
+protobuf = { git = "https://github.com/stepancheg/rust-protobuf#bfbe63fa796aa92e9bcdc18c42d73a480c1b4031" }
+piet = { git = "https://github.com/linebender/piet#0d0647ef6c5fce00e227fab5db99726cbf35c9d7" }
+piet-common = { git = "https://github.com/linebender/piet#0d0647ef6c5fce00e227fab5db99726cbf35c9d7", package = "piet-common" }
+
+[build-dependencies]
+protobuf-codegen-pure = { git = "https://github.com/stepancheg/rust-protobuf#bfbe63fa796aa92e9bcdc18c42d73a480c1b4031" }
