@@ -2,7 +2,6 @@ use crate::error;
 use crate::ms_coco;
 use crate::utils;
 
-use ndarray;
 use std::path;
 use tensorflow as tf;
 
@@ -14,6 +13,13 @@ pub struct DetectionBox {
     pub label: String,
     pub score: f32,
 }
+
+type SSDTensors = (
+    tensorflow::Tensor<f32>,
+    tensorflow::Tensor<f32>,
+    tensorflow::Tensor<f32>,
+    tensorflow::Tensor<f32>,
+);
 
 pub struct SSDMobileNetV2 {
     graph: tf::Graph,
@@ -31,9 +37,9 @@ impl SSDMobileNetV2 {
         graph.import_graph_def(&graph_def[..], &tf::ImportGraphDefOptions::new())?;
 
         Ok(SSDMobileNetV2 {
-            graph: graph,
-            session: session,
-            label_map: label_map,
+            graph,
+            session,
+            label_map,
         })
     }
 
@@ -60,18 +66,7 @@ impl SSDMobileNetV2 {
         Ok((image_tensor_op, input_image_tensor))
     }
 
-    fn run(
-        &self,
-        img: &image::DynamicImage,
-    ) -> Result<
-        (
-            tensorflow::Tensor<f32>,
-            tensorflow::Tensor<f32>,
-            tensorflow::Tensor<f32>,
-            tensorflow::Tensor<f32>,
-        ),
-        error::Error,
-    > {
+    fn run(&self, img: &image::DynamicImage) -> Result<SSDTensors, error::Error> {
         let (image_tensor_op, input_image_tensor) = self.transform_image(img)?;
 
         let mut args = tf::SessionRunArgs::new();
@@ -102,7 +97,7 @@ impl SSDMobileNetV2 {
 
         let label_names: Result<Vec<String>, ms_coco::LabelNotFound> = classes_tensor
             .iter()
-            .map(|class| self.label_map.get_label_name(&(class.clone() as i32)))
+            .map(|class| self.label_map.get_label_name(&(*class as i32)))
             .collect();
         let label_names = label_names?;
 
@@ -117,7 +112,7 @@ impl SSDMobileNetV2 {
             y2: bbox[2],
             x2: bbox[3],
             label: label.to_string(),
-            score: score.clone(),
+            score: *score,
         })
         .collect();
 

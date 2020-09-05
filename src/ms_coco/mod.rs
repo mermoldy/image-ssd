@@ -1,8 +1,6 @@
 pub mod protos;
 
 use crate::error;
-use protobuf;
-use std;
 use std::collections;
 use std::fmt;
 use std::result;
@@ -43,15 +41,11 @@ impl LabelMap {
         })
     }
 
-    pub fn len(&self) -> usize {
-        self.data.len()
-    }
-
     pub fn get_label_name(&self, id: &i32) -> Result<String, LabelNotFound> {
         Ok(self
             .data
             .get(id)
-            .ok_or_else(|| LabelNotFound { id: id.clone() })?
+            .ok_or_else(|| LabelNotFound { id: *id })?
             .to_string())
     }
 }
