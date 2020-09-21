@@ -14,10 +14,10 @@ flate2 = "1.0.17"
 dirs = "3.0"
 log = "0.4.8"
 checksums = "0.6.0"
-tensorflow = { git = "https://github.com/tensorflow/rust", rev = "e9e4b489ed66a2d9fbb5f4b610f1e46a3c38e1fd"}
+tensorflow = "0.16.0"
 protobuf = { git = "https://github.com/stepancheg/rust-protobuf", rev = "bfbe63fa796aa92e9bcdc18c42d73a480c1b4031" }
-piet = { git = "https://github.com/linebender/piet", rev = "0d0647ef6c5fce00e227fab5db99726cbf35c9d7" }
-piet-common = { git = "https://github.com/linebender/piet", rev = "0d0647ef6c5fce00e227fab5db99726cbf35c9d7", package = "piet-common" }
+piet = "0.2.0-pre3"
+piet-common = "0.2.0-pre3"
 
 [build-dependencies]
 protobuf-codegen-pure = { git = "https://github.com/stepancheg/rust-protobuf", rev = "bfbe63fa796aa92e9bcdc18c42d73a480c1b4031" }

@@ -57,6 +57,12 @@ jobs:
           command: clippy
           args: --manifest-path=Cargo.toml -- -D warnings
 
+      - name: cargo test image_ssd
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --manifest-path=Cargo.toml --all-features
+
   test-nightly:
     runs-on: ${{ matrix.os }}
     strategy:
