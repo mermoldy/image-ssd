@@ -105,7 +105,7 @@ impl ImageBoxes {
                 let label_text = format!(" {} ({:.1}%)", b.label, b.score * 100.0);
                 let layout = ctx
                     .text()
-                    .new_text_layout(label_text.as_str())
+                    .new_text_layout(label_text)
                     .font(font_family, self.font_size)
                     .text_color(self.label_color.clone())
                     .build()?;
@@ -151,7 +151,8 @@ impl ImageBoxes {
         ctx.finish()?;
         std::mem::drop(ctx);
 
-        let buffer = bitmap.raw_pixels(piet::ImageFormat::RgbaPremul)?;
+        let mut buffer = vec![0; (width * height * 4) as usize];
+        bitmap.copy_raw_pixels(piet::ImageFormat::RgbaPremul, &mut buffer)?;
         let res_img = image::ImageBuffer::from_raw(width, height, buffer)
             .map(image::DynamicImage::ImageRgba8)
             .ok_or_else(|| "Cannot contruct a buffer from a generic container")?;

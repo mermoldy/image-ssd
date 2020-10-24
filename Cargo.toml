@@ -16,8 +16,8 @@ log = "0.4.8"
 checksums = "0.6.0"
 tensorflow = "0.16.0"
 protobuf = { git = "https://github.com/stepancheg/rust-protobuf", rev = "bfbe63fa796aa92e9bcdc18c42d73a480c1b4031" }
-piet = "0.2.0-pre3"
-piet-common = "0.2.0-pre3"
+piet = "0.2.0-pre4"
+piet-common = "0.2.0-pre4"
 
 [build-dependencies]
 protobuf-codegen-pure = { git = "https://github.com/stepancheg/rust-protobuf", rev = "bfbe63fa796aa92e9bcdc18c42d73a480c1b4031" }
